@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { axiosWithAuth } from '../utils/axiosWithAuth'
+import { PrivateRoute } from "../utils/PrivateRoute";
 
 const initialColor = {
    color: "",
@@ -7,7 +8,6 @@ const initialColor = {
 };
 
 const ColorList = ({ colors, updateColors }) => {
-   console.log(colors);
    const [editing, setEditing] = useState(false);
    const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -18,13 +18,29 @@ const ColorList = ({ colors, updateColors }) => {
 
    const saveEdit = e => {
       e.preventDefault();
-      // Make a put request to save your updated color
-      // think about where will you get the id from...
-      // where is is saved right now?
+      axiosWithAuth()
+         .put(`/colors/${colorToEdit.id}`, colorToEdit)
+         .then(res => {
+            // console.log('COLORS', res.data)
+            updateColors(res.data)
+         })
+         .catch(err => {
+            console.log('ERROR', err)
+         })
+      setEditing(false)
+      setColorToEdit(initialColor)
    };
 
    const deleteColor = color => {
       // make a delete request to delete this color
+      axiosWithAuth()
+         .delete(`/colors/${color.id}`, color)
+         .then(res => {
+            updateColors(res.data)
+         })
+         .catch(err => {
+            console.log('ERROR', err)
+         })
    };
 
    return (
@@ -75,7 +91,7 @@ const ColorList = ({ colors, updateColors }) => {
                   />
                </label>
                <div className="button-row">
-                  <button type="submit">save</button>
+                  <button onClick={saveEdit} type="submit">save</button>
                   <button onClick={() => setEditing(false)}>cancel</button>
                </div>
             </form>
