@@ -31,6 +31,7 @@ const Login = () => {
             console.log('ERROR', err)
          })
    }
+
    return (
       <>
          <h1>Welcome to the Bubble App!</h1>

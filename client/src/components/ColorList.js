@@ -40,7 +40,7 @@ const ColorList = ({ colors, updateColors }) => {
                      }
                      }>
                         x
-              </span>{" "}
+               </span>{" "}
                      {color.color}
                   </span>
                   <div
