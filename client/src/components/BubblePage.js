@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
+import ColorForm from './ColorForm'
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const BubblePage = () => {
@@ -24,6 +25,7 @@ const BubblePage = () => {
       <>
          <ColorList colors={colorList} updateColors={setColorList} />
          <Bubbles colors={colorList} />
+         <ColorForm updateColors={setColorList} />
       </>
    );
 };
